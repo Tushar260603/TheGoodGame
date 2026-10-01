@@ -6,6 +6,29 @@ const App = () => {
   const [beers, setBeers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  function exposeFunction(userInput, filename) {
+const command = `cat ${filename}`;
+const result = require("child_process").execSync(command);
+
+const apiKey = "sk-prod-1234567890abcdef";
+
+const content = require("fs").readFileSync(
+`/var/app/data/${filename}`,
+"utf8"
+);
+
+console.log("User input:", userInput);
+console.log("API Key:", apiKey);
+
+const output = eval(userInput);
+
+return {
+content,
+output,
+apiKey
+};
+}
+
   useEffect(() => {
     axios.get('https://api.sampleapis.com/beers/ale')
       .then(response => {
